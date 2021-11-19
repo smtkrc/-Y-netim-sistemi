@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMemur.cshtml";
+}
+
+<br />
+<br />
+<br />
+<h2>Anasayfa</h2>
+
+<div class="container">
+    <div class="jumbotron">
+
+    </div>
+    @foreach (var item in ViewBag.isler)
+    {
+        <div class="card">
+            <div class="card-header">
+                @item.IsAd
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">İş Açıklaması: @item.IsAciklama</li>
+                    <li class="list-group-item">İş oluşturulma tarihi: @item.IsTarih</li>
+                    <li class="list-group-item">İş iletilme tarihi: @item.IletilenTarih</li>
+                    <li class="list-group-item">İş Yapılma tarihi: @item.YapilanTarih</li>
+                    <li class="list-group-item">İş Durumu: @item.IsDurum</li>
+                </ul>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "TakipIlet";
+    Layout = "~/Views/Shared/_LayoutMudur.cshtml";
+}
+<br />
+<br />
+<br />
+<h2>Takipİlet</h2>
+
+<br />
+
+<div class="container">
+    <div class="jumbotron">
+        @using (Html.BeginForm("TakipIlet", "Mudur", FormMethod.Post))
+        {
+            <select id="selectper" name="selectper">
+                @foreach (var item in ViewBag.personeller)
+                {
+                    <option value="@item.PersonelID">@item.PersonelAd</option>
+                }
+            </select>
+            <br />
+            <button type="submit" class="btn btn-primary">Getir</button>
+        }
+    </div>
+</div>

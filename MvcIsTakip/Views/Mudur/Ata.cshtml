@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Ata";
+    Layout = "~/Views/Shared/_LayoutMudur.cshtml";
+}
+<br />
+<br />
+<h2>Ata</h2>
+
+<div class="container">
+    <div class="jumbotron">
+        @ViewBag.personel.PersonelAd
+    </div>
+    <div class="container">
+        @using (Html.BeginForm("Ata", "Mudur", FormMethod.Post)){
+        foreach (var item in ViewBag.isler)
+        {
+            <div class="card">
+                    <div class="card-body">
+                        <input type="hidden" id="IsID" name="IsID" value="@item.IsID" />
+                        @item.IsAd   dsadsadasd
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">İlet</button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

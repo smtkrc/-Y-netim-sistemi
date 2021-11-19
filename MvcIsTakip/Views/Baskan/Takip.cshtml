@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Takip";
+    Layout = "~/Views/Shared/_LayoutBaskan.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<br />
+<br />
+<br />
+<h2>Takip</h2>
+<div class="container">
+    <div class="jumbotron">
+        @ViewBag.secilipersonel.PersonelAd
+    </div>
+    @foreach (var item in ViewBag.isler)
+    {
+        <div class="card">
+            <div class="card-header">@item.IsAd</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">İş Açıklama: @item.IsAciklama</li>
+                    <li class="list-group-item">İş Tarih: @item.IsTarih</li>
+                    <li class="list-group-item">İş İletilen: @item.IletilenTarih</li>
+                    <li class="list-group-item">İş Yapılan: @item.YapilanTarih</li>
+                    <li class="list-group-item">İş Durum: @item.IsDurum</li>
+                </ul>
+            </div>
+        </div>
+    }
+</div>

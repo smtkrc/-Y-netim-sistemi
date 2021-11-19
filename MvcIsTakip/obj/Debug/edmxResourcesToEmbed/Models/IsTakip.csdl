@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBIsTakipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Birimler">
+    <Key>
+      <PropertyRef Name="BirimID" />
+    </Key>
+    <Property Name="BirimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BirimAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TBL_Personel" Relationship="Self.FK_TBL_Personel_Birimler" FromRole="Birimler" ToRole="TBL_Personel" />
+    <NavigationProperty Name="Yetkiler" Relationship="Self.FK_Yetkiler_Birimler" FromRole="Birimler" ToRole="Yetkiler" />
+  </EntityType>
+  <EntityType Name="Isler">
+    <Key>
+      <PropertyRef Name="IsID" />
+    </Key>
+    <Property Name="IsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsTarih" Type="DateTime" Precision="3" />
+    <Property Name="IsPersonelID" Type="Int32" />
+    <Property Name="IletilenTarih" Type="DateTime" Precision="3" />
+    <Property Name="YapilanTarih" Type="DateTime" Precision="3" />
+    <Property Name="IsDurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TBL_Personel" Relationship="Self.FK_Isler_TBL_Personel" FromRole="Isler" ToRole="TBL_Personel" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TBL_Personel">
+    <Key>
+      <PropertyRef Name="PersonelID" />
+    </Key>
+    <Property Name="PersonelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonelAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PersonelBirimID" Type="Int32" />
+    <Property Name="KullaniciAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PersonelParola" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Birimler" Relationship="Self.FK_TBL_Personel_Birimler" FromRole="TBL_Personel" ToRole="Birimler" />
+    <NavigationProperty Name="Isler" Relationship="Self.FK_Isler_TBL_Personel" FromRole="TBL_Personel" ToRole="Isler" />
+    <NavigationProperty Name="Yetkiler" Relationship="Self.FK_Yetkiler_TBL_Personel" FromRole="TBL_Personel" ToRole="Yetkiler" />
+  </EntityType>
+  <EntityType Name="Yetkiler">
+    <Key>
+      <PropertyRef Name="YetkiID" />
+    </Key>
+    <Property Name="YetkiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="YetkiTurID" Type="Int32" />
+    <Property Name="PersonelID" Type="Int32" />
+    <Property Name="BirimID" Type="Int32" />
+    <NavigationProperty Name="Birimler" Relationship="Self.FK_Yetkiler_Birimler" FromRole="Yetkiler" ToRole="Birimler" />
+    <NavigationProperty Name="TBL_Personel" Relationship="Self.FK_Yetkiler_TBL_Personel" FromRole="Yetkiler" ToRole="TBL_Personel" />
+    <NavigationProperty Name="YetkiTurler" Relationship="Self.FK_Yetkiler_YetkiTurler" FromRole="Yetkiler" ToRole="YetkiTurler" />
+  </EntityType>
+  <EntityType Name="YetkiTurler">
+    <Key>
+      <PropertyRef Name="YetkiTurID" />
+    </Key>
+    <Property Name="YetkiTurID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="YetkiTurAd" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Yetkiler" Relationship="Self.FK_Yetkiler_YetkiTurler" FromRole="YetkiTurler" ToRole="Yetkiler" />
+  </EntityType>
+  <Association Name="FK_TBL_Personel_Birimler">
+    <End Role="Birimler" Type="Self.Birimler" Multiplicity="0..1" />
+    <End Role="TBL_Personel" Type="Self.TBL_Personel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birimler">
+        <PropertyRef Name="BirimID" />
+      </Principal>
+      <Dependent Role="TBL_Personel">
+        <PropertyRef Name="PersonelBirimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yetkiler_Birimler">
+    <End Role="Birimler" Type="Self.Birimler" Multiplicity="0..1" />
+    <End Role="Yetkiler" Type="Self.Yetkiler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birimler">
+        <PropertyRef Name="BirimID" />
+      </Principal>
+      <Dependent Role="Yetkiler">
+        <PropertyRef Name="BirimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Isler_TBL_Personel">
+    <End Role="TBL_Personel" Type="Self.TBL_Personel" Multiplicity="0..1" />
+    <End Role="Isler" Type="Self.Isler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_Personel">
+        <PropertyRef Name="PersonelID" />
+      </Principal>
+      <Dependent Role="Isler">
+        <PropertyRef Name="IsPersonelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yetkiler_TBL_Personel">
+    <End Role="TBL_Personel" Type="Self.TBL_Personel" Multiplicity="0..1" />
+    <End Role="Yetkiler" Type="Self.Yetkiler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_Personel">
+        <PropertyRef Name="PersonelID" />
+      </Principal>
+      <Dependent Role="Yetkiler">
+        <PropertyRef Name="PersonelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yetkiler_YetkiTurler">
+    <End Role="YetkiTurler" Type="Self.YetkiTurler" Multiplicity="0..1" />
+    <End Role="Yetkiler" Type="Self.Yetkiler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="YetkiTurler">
+        <PropertyRef Name="YetkiTurID" />
+      </Principal>
+      <Dependent Role="Yetkiler">
+        <PropertyRef Name="YetkiTurID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBIsTakipEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Birimler" EntityType="Self.Birimler" />
+    <EntitySet Name="Isler" EntityType="Self.Isler" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TBL_Personel" EntityType="Self.TBL_Personel" />
+    <EntitySet Name="Yetkiler" EntityType="Self.Yetkiler" />
+    <EntitySet Name="YetkiTurler" EntityType="Self.YetkiTurler" />
+    <AssociationSet Name="FK_TBL_Personel_Birimler" Association="Self.FK_TBL_Personel_Birimler">
+      <End Role="Birimler" EntitySet="Birimler" />
+      <End Role="TBL_Personel" EntitySet="TBL_Personel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yetkiler_Birimler" Association="Self.FK_Yetkiler_Birimler">
+      <End Role="Birimler" EntitySet="Birimler" />
+      <End Role="Yetkiler" EntitySet="Yetkiler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Isler_TBL_Personel" Association="Self.FK_Isler_TBL_Personel">
+      <End Role="TBL_Personel" EntitySet="TBL_Personel" />
+      <End Role="Isler" EntitySet="Isler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yetkiler_TBL_Personel" Association="Self.FK_Yetkiler_TBL_Personel">
+      <End Role="TBL_Personel" EntitySet="TBL_Personel" />
+      <End Role="Yetkiler" EntitySet="Yetkiler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yetkiler_YetkiTurler" Association="Self.FK_Yetkiler_YetkiTurler">
+      <End Role="YetkiTurler" EntitySet="YetkiTurler" />
+      <End Role="Yetkiler" EntitySet="Yetkiler" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DBIsTakipModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DBIsTakipModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

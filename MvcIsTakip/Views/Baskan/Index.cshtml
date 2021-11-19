@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutBaskan.cshtml";
+}
+<title>Hoşgeldiniz</title>
+<br />
+<br />
+<br />
+<h2>Anasayfa</h2>
+<h3>Hoşgeldiniz Syn. @ViewBag.seciliper.PersonelAd</h3>
+<br />
+<ul>
+    <li>
+        <a style="width:300px" class="btn btn-info" href="/Mudur/ilet">İş iletmek için tıklayınız</a>
+    </li>
+    <br />
+    <li>
+        <a style="width:300px" class="btn btn-success" href="/Mudur/Takipilet">İş Takip etmek için tıklayınız</a>
+    </li>
+    <br />
+    <li>
+        <a style="width:300px" class="btn btn-warning" href="/Mudur/Yap">İş yapmak için tıklayınız</a>
+    </li>
+</ul>
+<br />
+<h2>Tüm işlerin listesi</h2>
+<br />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+<div class="container">
+    @foreach (var item in ViewBag.tumis)
+    {
+        <div class="card">
+            <div class="card-header">@item.IsID - @item.IsAd</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">İş Açıklama: @item.IsAciklama</li>
+                    <li class="list-group-item">İş Tarih: @item.IsTarih</li>
+                    <li class="list-group-item">İş İletilen: @item.IletilenTarih</li>
+                    <li class="list-group-item">İş Yapılan: @item.YapilanTarih</li>
+                    <li class="list-group-item">İş Durum: @item.IsDurum</li>
+                </ul>
+            </div>
+        </div>
+    }
+    <br /><s></s>
+</div>
